@@ -3,11 +3,13 @@ package com.johndeere.tms.controller;
 import com.johndeere.tms.exceptions.BadRequestException;
 import com.johndeere.tms.exceptions.InvalidSessionException;
 import com.johndeere.tms.model.addevent.AddEventRequest;
+import com.johndeere.tms.model.addevent.Events;
 import com.johndeere.tms.model.endsession.EndSessionRequest;
 import com.johndeere.tms.model.startsession.StartSessionRequest;
 import com.johndeere.tms.model.startsession.StartSessionResponse;
 import com.johndeere.tms.service.AddEventService;
 import com.johndeere.tms.service.EndSessionService;
+import com.johndeere.tms.service.GetEventsService;
 import com.johndeere.tms.service.StartSessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -26,6 +29,7 @@ public class TmsControllerImpl implements TmsController {
     private final StartSessionService startSessionService;
     private final AddEventService addEventService;
     private final EndSessionService endSessionService;
+    private final GetEventsService getEventsService;
 
     @Override
     public ResponseEntity<StartSessionResponse> startSession(
@@ -48,6 +52,14 @@ public class TmsControllerImpl implements TmsController {
     public ResponseEntity<String> endSession(EndSessionRequest endSessionRequest) {
         try {
             return this.endSessionService.endSession(endSessionRequest);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public ResponseEntity<List<Events>> getEvents(String sessionId) {
+        try {
+            return this.getEventsService.getEvents(sessionId);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
