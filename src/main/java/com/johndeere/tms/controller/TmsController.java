@@ -1,6 +1,7 @@
 package com.johndeere.tms.controller;
 
 import com.johndeere.tms.model.addevent.AddEventRequest;
+import com.johndeere.tms.model.endsession.EndSessionRequest;
 import com.johndeere.tms.model.startsession.StartSessionRequest;
 import com.johndeere.tms.model.startsession.StartSessionResponse;
 import org.springframework.http.MediaType;
@@ -20,6 +21,11 @@ public interface TmsController {
     @PostMapping(value = "/addEvent")
     ResponseEntity<String> addEvent(
             @RequestBody() AddEventRequest addEventRequest
+    );
+
+    @PostMapping(value = "/endSession")
+    ResponseEntity<String> endSession(
+            @RequestBody() EndSessionRequest endSessionRequest
     );
 
 }
