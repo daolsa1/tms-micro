@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: "tms-micro"
+
+commons:
+  filters:
+    urls: "/v1/*"
